@@ -1,0 +1,37 @@
+{
+  "name": "blog",
+  "version": "0.0.1",
+  "description": "blog time",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/estrattonbailey/blog.git"
+  },
+  "keywords": [
+    "nah"
+  ],
+  "author": "?",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/estrattonbailey/blog/issues"
+  },
+  "homepage": "https://github.com/estrattonbailey/blog#readme",
+  "dependencies": {
+    "case": "^1.5.5",
+    "compression": "^1.7.3",
+    "connect": "^3.6.6",
+    "gray-matter": "^4.0.1",
+    "highlight.js": "^9.12.0",
+    "node-fetch": "^2.2.0",
+    "remarkable": "^1.7.1",
+    "router": "^1.3.3",
+    "serve-static": "^1.13.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}

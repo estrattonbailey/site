@@ -1,3 +1,6 @@
+---
+title: Building Headless Shopify
+---
 # Building Headless
 
 For many studios like ours, Shopify is the de-facto standard for e-commerce.
