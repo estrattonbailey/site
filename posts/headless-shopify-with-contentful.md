@@ -1,9 +1,9 @@
 ---
-title: Building Headless Shopify With Contentful
-description: An overview of building a custom e-commerce solution for Clare.com,
-using the Shopify Storefront GraphQL API and Contentful.
+title: "Building Headless Shopify With Contentful and the Storefront GraphQL API"
+description: "An overview of building a custom e-commerce solution for Clare.com,
+using the Shopify Storefront GraphQL API and Contentful."
 ---
-# Building Headless
+# Building Headless Shopify With Contentful and the Storefront GraphQL API
 
 For many studios like ours, Shopify is the de-facto standard for e-commerce.
 It's simplicity is its strength, and what Shopify has lacked in the past in

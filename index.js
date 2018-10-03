@@ -10,7 +10,7 @@ const { NOW } = process.env
 router.get('/', (req, res) =>  {
   res.end(html({
     data: {
-      title: 'estrattonbailey'
+      title: 'so nice'
     },
     content: 'so nice'
   }))
