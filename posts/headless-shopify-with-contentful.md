@@ -1,5 +1,7 @@
 ---
-title: Building Headless Shopify
+title: Building Headless Shopify With Contentful
+description: An overview of building a custom e-commerce solution for Clare.com,
+using the Shopify Storefront GraphQL API and Contentful.
 ---
 # Building Headless
 
@@ -85,6 +87,46 @@ For managing this state, we used picostate, which is a simple wrapper around
 essentially a javascript object. It gave us the ability to put data into the
 application asynchronously, and only fire updates and render the app when we
 were good and ready.
+
+For fun, here's a very brief example of this:
+
+```
+// store.js
+import createStore from 'picostate'
+export default createStore({})
+
+// cache.js
+export default function cache (store, key, load, opts = {}) {
+  return store.state[key] && !opts.refetch ? (
+    Promise.resolve(store.state[key])
+  ) : (
+    Promise.resolve(load()).then(data => {
+      data && store.hydrate({
+        [key]: data
+      })
+
+      return data
+    }).catch(log('error', `cache for ${key} failed`))
+  )
+}
+
+// route.js
+import { route } from 'foil'
+import store from './store.js'
+import cache form './cache.js'
+
+export default route({
+  path: '/:slug',
+  payload: {
+    Component: () => <h1>Product</h1>,
+    load ({ store, state }) {
+      return cache(store, state.params.slug, () => {
+        return getPageBySlug(state.params.slug)
+      })
+    }
+  }
+})
+```
 
 ### Routing
 Similar to picostate, we used foil as a transparent routing solution (it uses

@@ -1,25 +1,9 @@
 const path = require('path')
 const Remarkable = require('remarkable')
-const hljs = require('highlight.js')
 
-const md = new Remarkable({
-  highlight: function (str, lang) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(lang, str).value;
-      } catch (err) {}
-    }
-
-    try {
-      return hljs.highlightAuto(str).value;
-    } catch (err) {}
-
-    return ''; // use external default escaping
-  }
-})
+const md = new Remarkable()
 
 module.exports = function (props) {
-  console.log(props)
   return `
     <!DOCTYPE html>
     <html lang='en'>
@@ -28,7 +12,7 @@ module.exports = function (props) {
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <meta name='viewport' content='width=device-width,initial-scale=1'>
         <link rel='canonical' href='so-nice.site'>
-        <title>${require('case').capital(path.basename(props.data.title))}</title>
+        ${require('html-meta-tags')(props.data)}
         <link rel='stylesheet' href='/static/main.css' />
       </head>
 

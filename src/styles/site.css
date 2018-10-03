@@ -1,0 +1,37 @@
+#root {
+  padding: 20px;
+
+  @media (--800) {
+    padding: 80px;;
+  }
+}
+
+::selection {
+  background: var(--theme);
+}
+
+pre {
+  font-family: inherit;
+  margin: 20px -20px;
+  background: whitesmoke;
+  padding: 20px;
+  border-left: 4px solid var(--theme);
+
+  @media (--800) {
+    margin: 80px -80px;
+    padding: 80px;
+  }
+
+  code {
+    background: transparent;
+  }
+}
+code {
+  font-family: inherit;
+  background-color: var(--theme);
+
+  &::selection {
+    background: var(--black);
+    color: white;
+  }
+}

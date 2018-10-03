@@ -5,17 +5,25 @@ const html = require('./html.js')
 const fetch = require('node-fetch')
 const fm = require('gray-matter')
 
+const { NOW } = process.env
+
 router.get('/', (req, res) =>  {
   res.end(html({
-    title: 'estrattonbailey',
-    content: 'Hello'
+    data: {
+      title: 'estrattonbailey'
+    },
+    content: 'so nice'
   }))
 })
 
 router.get('*', (req, res) => {
-  if (!fs.existsSync(path.join(__dirname, req.url))) return res.end('404')
+  const file = req.url.replace('.md', '') + '.md'
 
-  fetch(`https://api.github.com/repos/estrattonbailey/blog/contents/${path.basename(req.url)}`)
+  if (!NOW) {
+    return res.end(html(require('gray-matter')(fs.readFileSync(path.join(__dirname, 'posts', file), 'utf8'))))
+  }
+
+  fetch(`https://api.github.com/repos/estrattonbailey/blog/contents/posts/${path.basename(file)}`)
     .then(res => res.json())
     .then(res => {
       return Buffer.from(res.content, 'base64').toString('utf-8')
@@ -27,6 +35,7 @@ router.get('*', (req, res) => {
 
 require('connect')()
   .use(require('compression')())
+  .use(require('serve-static')('public'))
   .use((req, res, next) => {
     res.writeHead(200, {
       'Content-Type': 'text/html'
