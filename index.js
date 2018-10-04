@@ -8,12 +8,16 @@ const fm = require('gray-matter')
 const { NOW } = process.env
 
 router.get('/', (req, res) =>  {
-  res.end(html({
+  console.log('req', req.url)
+  const content = html({
     data: {
       title: 'so nice'
     },
     content: 'so nice'
-  }))
+  })
+  console.log(content)
+  res.statusCode = 200
+  res.end(content)
 })
 
 router.get('*', (req, res) => {
@@ -26,10 +30,22 @@ router.get('*', (req, res) => {
   fetch(`https://api.github.com/repos/estrattonbailey/blog/contents/posts/${path.basename(file)}`)
     .then(res => res.json())
     .then(res => {
+      console.log({ res })
       return Buffer.from(res.content, 'base64').toString('utf-8')
     })
     .then(content => {
+      res.statusCode = 200
       res.end(html(require('gray-matter')(content)))
+    })
+    .catch(e => {
+      res.statusCode = 500
+      res.end(html({
+        data: {
+          title: 'not nice',
+          description: 'something went wrong'
+        },
+        content: 'not nice :('
+      }))
     })
 })
 
@@ -37,10 +53,7 @@ require('connect')()
   .use(require('compression')())
   .use(require('serve-static')('public'))
   .use((req, res, next) => {
-    res.writeHead(200, {
-      'Content-Type': 'text/html'
-    })
-
+    res.setHeader('Content-Type', 'text/html')
     next()
   })
   .use(router)
