@@ -8,16 +8,13 @@ const fm = require('gray-matter')
 const { NOW } = process.env
 
 router.get('/', (req, res) =>  {
-  console.log('req', req.url)
-  const content = html({
+  res.statusCode = 200
+  res.end(html({
     data: {
       title: 'so nice'
     },
     content: 'so nice'
-  })
-  console.log(content)
-  res.statusCode = 200
-  res.end(content)
+  }))
 })
 
 router.get('*', (req, res) => {
@@ -28,14 +25,25 @@ router.get('*', (req, res) => {
   }
 
   fetch(`https://api.github.com/repos/estrattonbailey/blog/contents/posts/${path.basename(file)}`)
-    .then(res => res.json())
     .then(res => {
-      console.log({ res })
-      return Buffer.from(res.content, 'base64').toString('utf-8')
+      console.log({ status: res.status })
+      return res.json()
     })
-    .then(content => {
-      res.statusCode = 200
-      res.end(html(require('gray-matter')(content)))
+    .then(res => {
+      if (res.content) {
+        const content = Buffer.from(res.content, 'base64').toString('utf-8')
+        res.statusCode = 200
+        res.end(html(require('gray-matter')(content)))
+      } else {
+        res.statusCode = 404
+        res.end(html({
+          data: {
+            title: 'not nice',
+            description: `sorry, i couldn't find what you're looking for`
+          },
+          content: 'not very nice'
+        }))
+      }
     })
     .catch(e => {
       res.statusCode = 500
