@@ -11,7 +11,7 @@ router.get('/', (req, res) =>  {
   res.statusCode = 200
   res.end(html({
     data: {
-      title: 'so nice'
+      title: 'this is all there is'
     },
     content: 'so nice'
   }))
@@ -20,7 +20,7 @@ router.get('/', (req, res) =>  {
 router.get('*', (req, res) => {
   const file = req.url.replace('.md', '') + '.md'
 
-  if (!NOW) {
+  if (!NOW && fs.existsSync(path.join(__dirname, 'posts', file), 'utf8')) {
     return res.end(html(require('gray-matter')(fs.readFileSync(path.join(__dirname, 'posts', file), 'utf8'))))
   }
 

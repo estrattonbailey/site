@@ -3,7 +3,10 @@ title: "Building Headless Shopify With Contentful and the Storefront GraphQL API
 description: "An overview of building a custom e-commerce solution for Clare.com,
 using the Shopify Storefront GraphQL API and Contentful."
 ---
-# Building Headless Shopify With Contentful and the Storefront GraphQL API
+# Headless Shopify
+## with Contentful and the Storefront API
+
+* * *
 
 For many studios like ours, Shopify is the de-facto standard for e-commerce.
 It's simplicity is its strength, and what Shopify has lacked in the past in
@@ -19,7 +22,9 @@ content management and integrations with external systems and APIs.
 Until relatively recently, building on Shopify meant *building on Shopify*:
 using Liquid templates, and dreaming up clever solutions to problems like
 content management and data manipulation. With the introduction of the
-Storefront GraphQL API, much of this has changed.
+[Storefront GraphQL
+API](https://help.shopify.com/en/api/custom-storefronts/storefront-api), much of
+this has changed.
 
 For one of our latest sites, [Clare](https://www.clare.com), we opted to
 *decouple* Shopify. Decoupling *backend* from *frontend* – or "going headless" –
@@ -35,8 +40,9 @@ functionality. We also wanted to deliver a quality editorial experience, and
 enable their team to make use of heavy cross-product relational content.
 
 Of course, these are all things that Shopify does not easily accommodate, so we
-knew early on that we'd be reaching for more advanced systems like Contentful,
-and would likely need to run our own server.
+knew early on that we'd be reaching for more advanced systems like
+[Contentful](https://www.contentful.com/), and would likely need to run our own
+server.
 
 Limiting complexity and technical debt being top of mind, we began to weigh two
 options: integrating Contentful and a separate server into a Shopify hosted
@@ -88,7 +94,19 @@ essentially a javascript object. It gave us the ability to put data into the
 application asynchronously, and only fire updates and render the app when we
 were good and ready.
 
-For fun, here's a very brief example of this:
+### Routing
+Similar to picostate, we used foil as a transparent routing solution (it uses
+picostate internally). Foil's pattern is somewhat of a departure from most
+routers in the React ecosystem in that it too allows us to define exactly *when*
+to navigate to the next route.
+
+This allows us to easily load data, cache it, perform a route transition, and
+render the new data and view at exactly the moments we want.
+
+* * *
+
+*Code time:* For fun, here's a very brief example of the data and routing
+pattern we adopted:
 
 ```
 // store.js
@@ -127,15 +145,6 @@ export default route({
   }
 })
 ```
-
-### Routing
-Similar to picostate, we used foil as a transparent routing solution (it uses
-picostate internally). Foil's pattern is somewhat of a departure from most
-routers in the React ecosystem in that it too allows us to define exactly *when*
-to navigate to the next route.
-
-This allows us to easily load data, cache it, perform a route transition, and
-render the new data and view at exactly the moments we want.
 
 ### Server
 We're running a single Node server, hosted on now, and built with connect and
@@ -239,9 +248,9 @@ to accurately track conversions.
 
 You'll also need to handle redirects from Shopify URLs to your custom URLs (if
 they are custom; ours are). For this, we used a simple javascript redirect in
-the `<head>` of the Shopify theme. If a user were to navigate directly to
-cart.clare.com, it would redirect them to the usual www.clare.com,
-cart.clare.com/products to www.clare.com/paint/wall, and so on.
+the `<head>` of the Shopify `theme.liquid` template. If a user were to navigate directly to
+`cart.clare.com`, it would redirect them to the usual `www.clare.com`,
+`cart.clare.com/products` to `www.clare.com/paint/wall`, and so on.
 
 ### Apps and Integrations
 Of course, if your frontend isn't *on* Shopify, then any apps that require

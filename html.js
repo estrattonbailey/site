@@ -12,8 +12,9 @@ module.exports = function (props) {
         <meta charset='utf-8'>
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <meta name='viewport' content='width=device-width,initial-scale=1'>
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon.png">
         <link rel='canonical' href='so-nice.site'>
-        <title>${props.data.title}</title>
+        <title>${props.data.title} | so nice</title>
         ${require('html-meta-tags')(props.data)}
         <link rel='stylesheet' href='/static/main.css' />
 
