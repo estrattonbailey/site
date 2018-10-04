@@ -25,15 +25,11 @@ router.get('*', (req, res) => {
   }
 
   fetch(`https://api.github.com/repos/estrattonbailey/blog/contents/posts/${path.basename(file)}`)
-    .then(res => {
-      console.log({ status: res.status })
-      return res.json()
-    })
-    .then(res => {
-      if (res.content) {
-        const content = Buffer.from(res.content, 'base64').toString('utf-8')
+    .then(r => r.json())
+    .then(r => {
+      if (r.content) {
         res.statusCode = 200
-        res.end(html(require('gray-matter')(content)))
+        res.end(html(require('gray-matter')(Buffer.from(r.content, 'base64').toString('utf-8'))))
       } else {
         res.statusCode = 404
         res.end(html({
@@ -46,6 +42,7 @@ router.get('*', (req, res) => {
       }
     })
     .catch(e => {
+      console.log(e)
       res.statusCode = 500
       res.end(html({
         data: {

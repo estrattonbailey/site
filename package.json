@@ -7,7 +7,8 @@
     "start": "node index.js",
     "dev": "concurrently 'nodemon index.js' 'npm run watch:assets'",
     "build:assets": "spaghetti",
-    "watch:assets": "spaghetti -w"
+    "watch:assets": "spaghetti -w",
+    "deploy": "NODE_ENV=production npm run build:assets && now && now alias"
   },
   "repository": {
     "type": "git",
