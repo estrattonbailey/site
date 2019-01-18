@@ -1,8 +1,8 @@
 ---
-title: "so nice"
+title: "about | so nice"
 description: "gee this is nice"
 ---
-# Hello world!
+# About
 
 [home](/)
 [about](/about)
