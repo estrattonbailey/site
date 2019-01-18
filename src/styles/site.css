@@ -16,6 +16,8 @@ pre {
   background: var(--gray);
   padding: 20px;
   border-left: 4px solid var(--theme);
+  overflow-y: hidden;
+  overflow-x: auto;
 
   @media (--800) {
     margin: 80px -80px;
