@@ -4,6 +4,6 @@ description: "gee this is nice"
 ---
 # Hello world!
 
-[home](/)
 [about](/about)
+[posts](/posts)
 [styleguide](/posts/styleguide)
